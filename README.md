@@ -1,157 +1,105 @@
-#Studyo
+ # Studyo
 
-Upload, understand, and prove you've learned it.
+ Upload, understand, and prove you've learned it.
 
-Studyo is a modern, privacy-focused interactive study companion built to revolutionize how you absorb and master dense materials. Powered directly by Google Gemini, Studyo lets you upload text files or PDFs, interact with them through highly contextual chats (with automatic source citations), and verify your real comprehension using the signature Teach-back active-recall evaluation framework.
+ Studyo is a privacy-focused interactive study companion that helps you absorb and master dense materials. Upload text files or PDFs, chat with the content with automatic source citations, and verify your understanding using the Teach-back active-recall evaluation framework.
 
-🌟 Core Features
+ ## Table of contents
 
-1. Document Chat (Grounded & Cited)
+ - [Features](#features)
+ - [Technical stack](#technical-stack)
+ - [Design system](#design-system)
+ - [Getting started](#getting-started)
+ - [Deployment](#deployment)
+ - [Security & privacy](#security--privacy)
+ - [License](#license)
 
-Ask deep or high-level questions about your custom study material.
+ ## Features
 
-100% Grounded: The model is strictly instructed to answer using only your uploaded context. If the answer cannot be found in the documents, it lets you know instead of guessing or hallucinating.
+ ### Document Chat (Grounded & Cited)
 
-Source Citations: Answers automatically call out and cite the specific file names they were pulled from.
+ - Ask deep or high-level questions about your uploaded study material.
+ - 100% grounded answers: the model responds only from the provided documents and signals when an answer can't be found.
+ - Automatic source citations pointing to the original file(s).
 
-2. Teach-Back Evaluation Engine (The Signature Feature)
+ ### Teach-Back Evaluation Engine
 
-Passive reading is a trap. Truly mastering a concept requires explaining it in your own words.
+ - Explain a concept in your own words and run the validator.
+ - Studyo returns four concise insights:
+	 - What you got right
+	 - What you missed
+	 - What’s slightly off
+	 - A mastery score (1–5) with a short verdict
 
-Type a concept from your materials, draft your explanation, and run the validator.
+ ### Bring-Your-Own-Key (BYOK)
 
-Studyo cross-references your explanation against the text and returns four precise insights:
+ - No server-side storage of API keys or user documents.
+ - Your Gemini API key stays on the client (React state + optional localStorage).
 
-What you got right (Encouraging verification of correctly recalled facts)
+ ### Dynamic Depth Toggle
 
-What you missed (Critical details or nuances present in the texts that you overlooked)
+ - Toggle between Simple (friendly, high-level) and Expert (technical, precise) response depths.
 
-What's slightly off (Subtle inaccuracies, errors, or mischaracterizations)
+ ## Technical stack
 
-Mastery Score (An objective 1 to 5 score with a single-sentence verdict)
+ - Framework: Next.js (App Router)
+ - Language: React / ES6
+ - Styling: Tailwind CSS
+ - Model engine: Google Gemini (e.g. `gemini-2.5-flash-lite`)
+ - State: React state with localStorage sync
+ - Data processing: native PDF parsing; documents are streamed as Base64 into the multimodal context
 
-3. Bring-Your-Own-Key (BYOK) Architecture
+ ## Design system
 
-Zero databases, zero servers storing or tracking your API keys.
+ The app uses a distraction-free layout with neutral backgrounds and crisp white surfaces. Primary accents use a high-fidelity blue (#2F7FD1). Teach-back feedback uses subtle tints for success, omissions, and minor errors.
 
-Your Gemini API key is kept completely on the client side in secure React state (and mirrored in localStorage for convenience).
+ ## Getting started
 
-API calls carry your key to the model securely and dynamically.
+ Prerequisites
 
-4. Dynamic Depth Toggle
+ - Node.js v18 or later
 
-Toggle between Simple and Expert study depths:
+ Install and run locally
 
-Simple: Friendly, high-level, intuitive analogies, and conversational vocabulary.
+ ```bash
+ git clone https://github.com/yourusername/studyo.git
+ cd studyo
+ npm install
+ npm run dev
+ ```
 
-Expert: Academic, precise, highly technical terminology, and rigorous logic loops.
+ Open http://localhost:3000 in your browser.
 
-🛠️ Technical Stack
+ ## Deployment
 
-Framework: Next.js (App Router)
+ Deploy to Vercel (no server env vars required since users provide keys client-side).
 
-Language: React / ES6 JavaScript
+ Option A — GitHub + Vercel
 
-Styling: Tailwind CSS (Fluid responsive grids, minimalist spacing)
+ ```bash
+ git init
+ git add .
+ git commit -m "Initial commit for Studyo"
+ git branch -M main
+ git remote add origin https://github.com/yourusername/studyo.git
+ git push -u origin main
+ ```
 
-Model Engine: Google Gemini (gemini-2.5-flash-lite or gemini-2.5-flash)
+ Then import the repository in the Vercel dashboard and deploy.
 
-State Management: React state & native localStorage synchronization
+ Option B — Vercel CLI
 
-Data Processing: Native PDF parsing (Base64 inline document stream injected straight into Gemini's multimodal context window — no heavyweight text-extraction packages required).
+ ```bash
+ npm install -g vercel
+ vercel
+ vercel --prod
+ ```
 
-🎨 Visual Design System
+ ## Security & privacy
 
-Studyo is designed with a premium, focused, and distraction-free workspace layout:
+ - No persistent storage of uploaded documents or derived vectors on third-party servers.
+ - API keys remain on the client and are sent directly to the Google Gemini endpoint.
 
-Background Canvas: Neutral warm off-white (#F5F4EF) to reduce eye strain.
+ ## License
 
-Component Surface: Crisp white panels (#FFFFFF) bound by thin subtle borders (#E7E5DE) and elegant 12px rounded corners.
-
-Accents: High-fidelity blue (#2F7FD1) for primary actions, indicators, and focus states.
-
-Teach-back Color Feedback:
-
-Success/Correct states: soft emerald tint (#E5F4EE)
-
-Omissions: soft amber tint (#FBEFD9)
-
-Minor errors/Misalignments: soft coral tint (#FAEbE4)
-
-🚀 Getting Started
-
-Prerequisites
-
-Make sure you have Node.js (v18+ recommended) installed on your system.
-
-Installation
-
-Clone the repository:
-
-git clone https://github.com/yourusername/studyo.git
-cd studyo
-
-
-Install project dependencies:
-
-npm install
-
-
-Start the local development server:
-
-npm run dev
-
-
-Open the web app:
-Navigate to http://localhost:3000 in your web browser.
-
-☁️ Vercel Deployment
-
-Deploying Studyo to Vercel takes less than 2 minutes and requires zero backend environment variable configurations, because users supply their own keys!
-
-Option A: Via GitHub (Recommended)
-
-Commit and push your local files to a new GitHub repository:
-
-git init
-git add .
-git commit -m "Initial commit for Studyo"
-git branch -M main
-git remote add origin https://github.com/yourusername/studyo.git
-git push -u origin main
-
-
-Go to your Vercel Dashboard.
-
-Click Add New -> Project.
-
-Import your newly created studyo repository.
-
-Click Deploy. Vercel will automatically configure Node.js, build your App Router project, and produce a live production URL!
-
-Option B: Via Vercel CLI
-
-Install the CLI tool globally:
-
-npm install -g vercel
-
-
-Execute the login and initialization wizard from your project directory:
-
-vercel
-
-
-Push the build to the production environment:
-
-vercel --prod
-
-
-🔒 Security & Privacy
-
-Direct execution: No text document vectors or private PDFs are stored on a third-party server. All data operations exist inside the temporary browser memory.
-
-Key Preservation: Your API keys are strictly sent from your client environment to the official Google Gemini server endpoint directly.
-
-📄 License
-
-This project is licensed under the MIT License.
+ This project is licensed under the MIT License.
